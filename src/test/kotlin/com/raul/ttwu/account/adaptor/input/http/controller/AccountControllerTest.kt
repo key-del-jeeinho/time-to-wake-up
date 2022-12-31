@@ -32,7 +32,7 @@ class AccountControllerTest: BehaviorSpec({
                 result.statusCode shouldBe HttpStatus.OK
             }
 
-            then("account data in response should be same as return of service") {
+            then("result should be same as return of service") {
                 body.accountIdx shouldBe account.idx
                 body.data.id shouldBe account.id
                 body.data.name shouldBe account.name

@@ -4,5 +4,5 @@ import com.raul.ttwu.account.domain.Account
 import com.raul.ttwu.account.domain.CreateAccount
 
 interface AccountUseCase {
-    fun createAccount(dto: CreateAccount): Account
+    fun createAccount(domain: CreateAccount): Account
 }
