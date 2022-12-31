@@ -8,3 +8,8 @@ spring:
     url: jdbc:h2:mem:test
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+test:
+  security:
+    password-encode: bcrypt
+    http:
+      authorize-request: permit-all
