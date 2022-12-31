@@ -5,7 +5,9 @@ import com.raul.ttwu.account.adaptor.output.persistence.extension.toEntity
 import com.raul.ttwu.account.adaptor.output.persistence.repository.AccountRepository
 import com.raul.ttwu.account.application.port.output.persistence.AccountPersistenceOutput
 import com.raul.ttwu.account.domain.Account
+import org.springframework.stereotype.Component
 
+@Component
 class JpaAccountPersistenceOutput(
     private val repository: AccountRepository
 ): AccountPersistenceOutput {

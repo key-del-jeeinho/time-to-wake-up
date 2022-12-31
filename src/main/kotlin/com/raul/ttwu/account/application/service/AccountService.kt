@@ -6,7 +6,9 @@ import com.raul.ttwu.account.application.port.output.persistence.AccountPersiste
 import com.raul.ttwu.account.application.service.extension.aggregateAccount
 import com.raul.ttwu.account.domain.Account
 import com.raul.ttwu.account.domain.CreateAccount
+import org.springframework.stereotype.Service
 
+@Service
 class AccountService(
     private val passwordEncodeOutput: PasswordEncodeOutput,
     private val accountPersistenceOutput: AccountPersistenceOutput
