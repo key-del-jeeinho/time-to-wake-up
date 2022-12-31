@@ -3,6 +3,9 @@ package com.raul.ttwu.account
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.raul.ttwu.IntegrationTestSpec
 import com.raul.ttwu.account.adaptor.input.http.data.request.CreateAccountRequest
+import com.raul.ttwu.account.adaptor.input.http.data.response.CreateAccountResponse
+import com.raul.ttwu.account.adaptor.output.persistence.repository.AccountRepository
+import io.kotest.matchers.shouldBe
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.notNullValue
 import org.springframework.http.MediaType.APPLICATION_JSON
@@ -14,6 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class AccountIntegrationTest(
     mvc: MockMvc,
     objectMapper: ObjectMapper,
+    accountRepository: AccountRepository
 ): IntegrationTestSpec(mvc, objectMapper, {
 
     /*
@@ -30,6 +34,17 @@ class AccountIntegrationTest(
                 .content(objectMapper.writeValueAsString(request))
                 .accept(APPLICATION_JSON))
                 .andDo{ print(it.response.contentAsString) }
+
+            then("account should be created") {
+                val optional = resultAction.andReturn().response.contentAsString
+                    .let{objectMapper.readValue(it, CreateAccountResponse::class.java)}
+                    .let{ accountRepository.findById(it.accountIdx) }
+                optional.isPresent shouldBe true
+
+                val data = optional.get()
+                data.id shouldBe request.id
+                data.name shouldBe request.name
+            }
 
             then("response status should be OK") {
                 resultAction.andExpect(status().isOk)
